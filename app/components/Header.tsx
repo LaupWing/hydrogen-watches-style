@@ -9,7 +9,7 @@ type Viewport = "desktop" | "mobile"
 export function Header({ header, isLoggedIn, cart }: HeaderProps) {
    const { shop, menu } = header
    return (
-      <header className="header">
+      <header className="flex container justify-between">
          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
             <strong>{shop.name}</strong>
          </NavLink>
@@ -82,7 +82,7 @@ function HeaderCtas({
    cart,
 }: Pick<HeaderProps, "isLoggedIn" | "cart">) {
    return (
-      <nav className="header-ctas" role="navigation">
+      <nav className="flex" role="navigation">
          <HeaderMenuMobileToggle />
          <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
             {isLoggedIn ? "Account" : "Sign in"}
