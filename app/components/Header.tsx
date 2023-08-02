@@ -9,7 +9,7 @@ type Viewport = "desktop" | "mobile"
 export function Header({ header, isLoggedIn, cart }: HeaderProps) {
    const { shop, menu } = header
    return (
-      <header className="flex container justify-between">
+      <header className="flex container justify-between mx-auto py-6">
          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
             <strong>{shop.name}</strong>
          </NavLink>
