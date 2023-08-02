@@ -38,3 +38,8 @@ npm run build
 ```bash
 npm run dev
 ```
+
+
+# Inspiration
+
+https://dribbble.com/shots/20444606-E-commerce-Store-UI
