@@ -1,144 +1,150 @@
 import {
-  isRouteErrorResponse,
-  useMatches,
-  useRouteError,
-} from '@remix-run/react';
-import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
+   isRouteErrorResponse,
+   useMatches,
+   useRouteError,
+} from "@remix-run/react"
+import { defer, type LoaderArgs } from "@shopify/remix-oxygen"
 import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react';
-import type {CustomerAccessToken} from '@shopify/hydrogen-react/storefront-api-types';
-import type {HydrogenSession} from '../server';
-import favicon from '../public/favicon.svg';
-import resetStyles from './styles/reset.css';
-import appStyles from './styles/app.css';
-import {Layout} from '~/components/Layout';
-import tailwindCss from './styles/tailwind.css';
+   Links,
+   Meta,
+   Outlet,
+   Scripts,
+   ScrollRestoration,
+   useLoaderData,
+} from "@remix-run/react"
+import type { CustomerAccessToken } from "@shopify/hydrogen-react/storefront-api-types"
+import type { HydrogenSession } from "../server"
+import favicon from "../public/favicon.svg"
+import resetStyles from "./styles/reset.css"
+import appStyles from "./styles/app.css"
+import { Layout } from "~/components/Layout"
+import tailwindCss from "./styles/tailwind.css"
 
 export function links() {
-  return [
-    {rel: 'stylesheet', href: tailwindCss},
-    {rel: 'stylesheet', href: resetStyles},
-    {rel: 'stylesheet', href: appStyles},
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
-  ];
+   return [
+      { rel: "stylesheet", href: tailwindCss },
+      { rel: "stylesheet", href: resetStyles },
+      { rel: "stylesheet", href: appStyles },
+      {
+         rel: "preconnect",
+         href: "https://cdn.shopify.com",
+      },
+      {
+         rel: "preconnect",
+         href: "https://shop.app",
+      },
+      { rel: "icon", type: "image/svg+xml", href: favicon },
+   ]
 }
 
-export async function loader({context}: LoaderArgs) {
-  const {storefront, session, cart} = context;
-  const customerAccessToken = await session.get('customerAccessToken');
-  const publicStoreDomain = context.env.PUBLIC_STORE_DOMAIN;
+export async function loader({ context }: LoaderArgs) {
+   const { storefront, session, cart } = context
+   const customerAccessToken = await session.get("customerAccessToken")
+   const publicStoreDomain = context.env.PUBLIC_STORE_DOMAIN
 
-  // validate the customer access token is valid
-  const {isLoggedIn, headers} = await validateCustomerAccessToken(
-    customerAccessToken,
-    session,
-  );
+   // validate the customer access token is valid
+   const { isLoggedIn, headers } = await validateCustomerAccessToken(
+      customerAccessToken,
+      session
+   )
 
-  // defer the cart query by not awaiting it
-  const cartPromise = cart.get();
+   // defer the cart query by not awaiting it
+   const cartPromise = cart.get()
 
-  // defer the footer query (below the fold)
-  const footerPromise = storefront.query(FOOTER_QUERY, {
-    cache: storefront.CacheLong(),
-    variables: {
-      footerMenuHandle: 'footer', // Adjust to your footer menu handle
-    },
-  });
+   // defer the footer query (below the fold)
+   const footerPromise = storefront.query(FOOTER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+         footerMenuHandle: "footer", // Adjust to your footer menu handle
+      },
+   })
 
-  // await the header query (above the fold)
-  const headerPromise = storefront.query(HEADER_QUERY, {
-    cache: storefront.CacheLong(),
-    variables: {
-      headerMenuHandle: 'main-menu', // Adjust to your header menu handle
-    },
-  });
+   // await the header query (above the fold)
+   const headerPromise = storefront.query(HEADER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+         headerMenuHandle: "main-menu", // Adjust to your header menu handle
+      },
+   })
 
-  return defer(
-    {
-      cart: cartPromise,
-      footer: footerPromise,
-      header: await headerPromise,
-      isLoggedIn,
-      publicStoreDomain,
-    },
-    {headers},
-  );
+   return defer(
+      {
+         cart: cartPromise,
+         footer: footerPromise,
+         header: await headerPromise,
+         isLoggedIn,
+         publicStoreDomain,
+      },
+      { headers }
+   )
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+   const data = useLoaderData<typeof loader>()
 
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Layout {...data}>
-          <Outlet />
-        </Layout>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+   return (
+      <html lang="en">
+         <head>
+            <meta charSet="utf-8" />
+            <meta
+               name="viewport"
+               content="width=device-width,initial-scale=1"
+            />
+            <Meta />
+            <Links />
+         </head>
+         <body>
+            <Layout {...data}>
+               <Outlet />
+            </Layout>
+            <ScrollRestoration />
+            <Scripts />
+         </body>
+      </html>
+   )
 }
 
 export function ErrorBoundary() {
-  const error = useRouteError();
-  const [root] = useMatches();
-  let errorMessage = 'Unknown error';
-  let errorStatus = 500;
+   const error = useRouteError()
+   const [root] = useMatches()
+   let errorMessage = "Unknown error"
+   let errorStatus = 500
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error?.data?.message ?? error.data;
-    errorStatus = error.status;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
-  }
+   if (isRouteErrorResponse(error)) {
+      errorMessage = error?.data?.message ?? error.data
+      errorStatus = error.status
+   } else if (error instanceof Error) {
+      errorMessage = error.message
+   }
 
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Layout {...root.data}>
-          <div className="route-error">
-            <h1>Oops</h1>
-            <h2>{errorStatus}</h2>
-            {errorMessage && (
-              <fieldset>
-                <pre>{errorMessage}</pre>
-              </fieldset>
-            )}
-          </div>
-        </Layout>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+   return (
+      <html lang="en">
+         <head>
+            <meta charSet="utf-8" />
+            <meta
+               name="viewport"
+               content="width=device-width,initial-scale=1"
+            />
+            <Meta />
+            <Links />
+         </head>
+         <body className="bg-background">
+            <Layout {...root.data}>
+               <div className="route-error">
+                  <h1>Oops</h1>
+                  <h2>{errorStatus}</h2>
+                  {errorMessage && (
+                     <fieldset>
+                        <pre>{errorMessage}</pre>
+                     </fieldset>
+                  )}
+               </div>
+            </Layout>
+            <ScrollRestoration />
+            <Scripts />
+         </body>
+      </html>
+   )
 }
 
 /**
@@ -155,25 +161,25 @@ export function ErrorBoundary() {
  *  ```
  *  */
 async function validateCustomerAccessToken(
-  customerAccessToken: CustomerAccessToken,
-  session: HydrogenSession,
+   customerAccessToken: CustomerAccessToken,
+   session: HydrogenSession
 ) {
-  let isLoggedIn = false;
-  const headers = new Headers();
-  if (!customerAccessToken?.accessToken || !customerAccessToken?.expiresAt) {
-    return {isLoggedIn, headers};
-  }
-  const expiresAt = new Date(customerAccessToken.expiresAt);
-  const dateNow = new Date();
-  const customerAccessTokenExpired = expiresAt < dateNow;
-  if (customerAccessTokenExpired) {
-    session.unset('customerAccessToken');
-    headers.append('Set-Cookie', await session.commit());
-  } else {
-    isLoggedIn = true;
-  }
+   let isLoggedIn = false
+   const headers = new Headers()
+   if (!customerAccessToken?.accessToken || !customerAccessToken?.expiresAt) {
+      return { isLoggedIn, headers }
+   }
+   const expiresAt = new Date(customerAccessToken.expiresAt)
+   const dateNow = new Date()
+   const customerAccessTokenExpired = expiresAt < dateNow
+   if (customerAccessTokenExpired) {
+      session.unset("customerAccessToken")
+      headers.append("Set-Cookie", await session.commit())
+   } else {
+      isLoggedIn = true
+   }
 
-  return {isLoggedIn, headers};
+   return { isLoggedIn, headers }
 }
 
 const MENU_FRAGMENT = `#graphql
@@ -200,7 +206,7 @@ const MENU_FRAGMENT = `#graphql
       ...ParentMenuItem
     }
   }
-` as const;
+` as const
 
 const HEADER_QUERY = `#graphql
   fragment Shop on Shop {
@@ -231,7 +237,7 @@ const HEADER_QUERY = `#graphql
     }
   }
   ${MENU_FRAGMENT}
-` as const;
+` as const
 
 const FOOTER_QUERY = `#graphql
   query Footer(
@@ -244,4 +250,4 @@ const FOOTER_QUERY = `#graphql
     }
   }
   ${MENU_FRAGMENT}
-` as const;
+` as const
