@@ -1,7 +1,7 @@
 import { Await, NavLink, useMatches } from "@remix-run/react"
 import { Suspense } from "react"
 import type { LayoutProps } from "./Layout"
-import { BiSolidCartAlt } from "react-icons/bi"
+import { BiSolidCartAlt, BiSolidSearchAlt2 } from "react-icons/bi"
 
 type HeaderProps = Pick<LayoutProps, "header" | "cart" | "isLoggedIn">
 
@@ -117,7 +117,14 @@ function SearchToggle() {
 }
 
 function CartBadge({ count }: { count: number }) {
-   return <a href="#cart-aside">Cart {count}</a>
+   return (
+      <a href="#cart-aside">
+         <BiSolidSearchAlt2 />      
+         <span>
+            {count}
+         </span> 
+      </a>
+   )
 }
 
 function CartToggle({ cart }: Pick<HeaderProps, "cart">) {
