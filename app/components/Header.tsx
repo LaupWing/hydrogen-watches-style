@@ -18,8 +18,8 @@ export function Header({ header, isLoggedIn, cart }: HeaderProps) {
          >
             <strong>{shop.name}</strong>
          </NavLink>
-         <HeaderMenu menu={menu} viewport="desktop" />
-         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+         <HeaderMenu isLoggedIn={isLoggedIn} menu={menu} viewport="desktop" />
+         <HeaderCtas cart={cart} />
       </header>
    )
 }
@@ -27,9 +27,11 @@ export function Header({ header, isLoggedIn, cart }: HeaderProps) {
 export function HeaderMenu({
    menu,
    viewport,
+   isLoggedIn,
 }: {
    menu: HeaderProps["header"]["menu"]
-   viewport: Viewport
+   viewport: Viewport,
+   isLoggedIn: boolean
 }) {
    const [root] = useMatches()
    const publicStoreDomain = root?.data?.publicStoreDomain
@@ -78,20 +80,19 @@ export function HeaderMenu({
                </NavLink>
             )
          })}
+         <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+            {isLoggedIn ? "Account" : "Sign in"}
+         </NavLink>
       </nav>
    )
 }
 
 function HeaderCtas({
-   isLoggedIn,
    cart,
-}: Pick<HeaderProps, "isLoggedIn" | "cart">) {
+}: Pick<HeaderProps, "cart">) {
    return (
       <nav className="flex" role="navigation">
          <HeaderMenuMobileToggle />
-         <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-            {isLoggedIn ? "Account" : "Sign in"}
-         </NavLink>
          <SearchToggle />
          <CartToggle cart={cart} />
       </nav>
