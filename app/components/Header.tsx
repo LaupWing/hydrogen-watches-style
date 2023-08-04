@@ -69,12 +69,11 @@ export function HeaderMenu({
                   : item.url
             return (
                <NavLink
-                  className="header-menu-item"
+                  className={activeClassName}
                   end
                   key={item.id}
                   onClick={closeAside}
                   prefetch="intent"
-                  style={activeLinkStyle}
                   to={url}
                >
                   {item.title}
@@ -212,8 +211,5 @@ function activeClassName({
    isActive: boolean
    isPending: boolean
 }) {
-   return {
-      fontWeight: isActive ? "text-red-900 border-bottom-2 border-red-900" : "",
-      color: isPending ? "grey" : "black",
-   }
+   return isActive ? "text-red-900 border-b-2 border-red-900" : ""
 }
