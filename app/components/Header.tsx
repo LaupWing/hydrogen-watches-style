@@ -92,7 +92,7 @@ function HeaderCtas({
    cart,
 }: Pick<HeaderProps, "cart">) {
    return (
-      <nav className="flex" role="navigation">
+      <nav className="flex gap-2" role="navigation">
          <HeaderMenuMobileToggle />
          <SearchToggle />
          <CartToggle cart={cart} />
@@ -110,8 +110,10 @@ function HeaderMenuMobileToggle() {
 
 function SearchToggle() {
    return (
-      <a href="#search-aside">
-         <BiSolidCartAlt />      
+      <a className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" href="#search-aside">
+         <BiSolidCartAlt 
+            size={18}
+         />      
       </a>
    )
 }
@@ -122,7 +124,7 @@ function CartBadge({ count }: { count: number }) {
          <BiSolidSearchAlt2 
             size={20}
          />      
-         <span className="absolute -bottom-3 right-0 text-black">
+         <span className="absolute bg-white/80 w-4 h-4 flex items-center justify-center rounded-full -bottom-1 right-0 text-black">
             {count}
          </span> 
       </a>
