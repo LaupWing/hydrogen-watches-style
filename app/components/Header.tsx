@@ -110,20 +110,26 @@ function HeaderMenuMobileToggle() {
 
 function SearchToggle() {
    return (
-      <a className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" href="#search-aside">
-         <BiSolidCartAlt 
+      <a 
+         className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" 
+         href="#search-aside"
+      >
+         <BiSolidSearchAlt2 
             size={18}
-         />      
+         />  
       </a>
    )
 }
 
 function CartBadge({ count }: { count: number }) {
    return (
-      <a className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" href="#cart-aside">
-         <BiSolidSearchAlt2 
-            size={20}
-         />      
+      <a 
+         className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" 
+         href="#cart-aside"
+      >
+         <BiSolidCartAlt 
+            size={16}
+         />  
          <span className="absolute bg-white/80 w-4 h-4 flex items-center justify-center rounded-full -bottom-1 right-0 text-black">
             {count}
          </span> 
