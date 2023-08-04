@@ -118,7 +118,7 @@ function SearchToggle() {
 
 function CartBadge({ count }: { count: number }) {
    return (
-      <a className="relative" href="#cart-aside">
+      <a className="relative w-10 h-10 flex" href="#cart-aside">
          <BiSolidSearchAlt2 />      
          <span className="absolute bottom-0">
             {count}
