@@ -204,3 +204,16 @@ function activeLinkStyle({
       color: isPending ? "grey" : "black",
    }
 }
+
+function activeClassName({
+   isActive,
+   isPending,
+}: {
+   isActive: boolean
+   isPending: boolean
+}) {
+   return {
+      fontWeight: isActive ? "text-red-900 border-bottom-2 border-red-900" : "",
+      color: isPending ? "grey" : "black",
+   }
+}
