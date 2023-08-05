@@ -46,7 +46,7 @@ export function HeaderMenu({
    }
 
    return (
-      <nav className={`${className} uppercase text-xs tracking-wider font-semibold`} role="navigation">
+      <nav className={`${className} uppercase text-sm gap-2 flex tracking-wider font-semibold`} role="navigation">
          {viewport === "mobile" && (
             <NavLink
                end
