@@ -91,7 +91,7 @@ function HeaderCtas({
    cart,
 }: Pick<HeaderProps, "cart">) {
    return (
-      <nav className="flex gap-2" role="navigation">
+      <nav className="flex gap-4" role="navigation">
          <HeaderMenuMobileToggle />
          <SearchToggle />
          <CartToggle cart={cart} />
