@@ -58,7 +58,7 @@ function RecommendedProducts({
    products: Promise<RecommendedProductsQuery>
 }) {
    return (
-      <div className="recommended-products">
+      <div className="recommended-products container mx-auto">
          <h2>Recommended Products</h2>
          <Suspense fallback={<div>Loading...</div>}>
             <Await resolve={products}>
