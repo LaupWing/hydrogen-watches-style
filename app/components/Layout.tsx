@@ -30,7 +30,7 @@ export function Layout({
    isLoggedIn,
 }: LayoutProps) {
    return (
-      <>
+      <div className="bg-primary">
          <CartAside cart={cart} />
          <SearchAside />
          <MobileMenuAside menu={header.menu} />
@@ -41,7 +41,7 @@ export function Layout({
                {(footer) => <Footer menu={footer.menu} />}
             </Await>
          </Suspense>
-      </>
+      </div>
    )
 }
 
