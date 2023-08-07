@@ -10,7 +10,7 @@ type Viewport = "desktop" | "mobile"
 export function Header({ header, isLoggedIn, cart }: HeaderProps) {
    const { shop, menu } = header
    return (
-      <header className="flex container justify-between mx-auto py-6">
+      <header className="justify-between custom-container">
          <NavLink 
             prefetch="intent" 
             to="/" 
@@ -32,7 +32,7 @@ export function HeaderMenu({
 }: {
    menu: HeaderProps["header"]["menu"]
    viewport: Viewport,
-   isLoggedIn: boolean
+   isLoggedIn?: boolean
 }) {
    const [root] = useMatches()
    const publicStoreDomain = root?.data?.publicStoreDomain
