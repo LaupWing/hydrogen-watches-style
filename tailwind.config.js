@@ -7,7 +7,7 @@ export default {
    theme:{
       extend: {
          colors: {
-            background: "rgb(var(--background) / <alpha-value>)",
+            primary: "rgb(var(--primary) / <alpha-value>)",
             accent: "rgb(var(--accent) / <alpha-value>)"
          }
       }
