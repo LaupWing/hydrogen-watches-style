@@ -32,7 +32,7 @@ export function HeaderMenu({
 }: {
    menu: HeaderProps["header"]["menu"]
    viewport: Viewport,
-   isLoggedIn: boolean
+   isLoggedIn?: boolean
 }) {
    const [root] = useMatches()
    const publicStoreDomain = root?.data?.publicStoreDomain
