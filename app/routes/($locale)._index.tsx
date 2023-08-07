@@ -39,7 +39,7 @@ function FeaturedCollection({
    const image = collection.image
    return (
       <Link
-         className="featured-collection"
+         className="featured-collection container mx-auto"
          to={`/collections/${collection.handle}`}
       >
          {image && (
