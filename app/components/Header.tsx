@@ -123,7 +123,7 @@ function SearchToggle() {
 function CartBadge({ count }: { count: number }) {
    return (
       <a 
-         className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-red-900 flex" 
+         className="relative text-white w-8 h-8 rounded-full items-center justify-center bg-accent flex" 
          href="#cart-aside"
       >
          <BiSolidCartAlt 
@@ -211,5 +211,5 @@ function activeClassName({
    isActive: boolean
    isPending: boolean
 }) {
-   return isActive ? "text-red-900 border-b-2 border-red-900" : ""
+   return isActive ? "text-accent border-b-2 border-accent" : ""
 }
