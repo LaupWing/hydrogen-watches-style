@@ -404,14 +404,14 @@ const PRODUCT_QUERY = `#graphql
 ` as const
 
 const PRODUCT_VARIANTS_FRAGMENT = `#graphql
-  fragment ProductVariants on Product {
-    variants(first: 250) {
-      nodes {
-        ...ProductVariant
+   fragment ProductVariants on Product {
+      variants(first: 250) {
+         nodes {
+         ...ProductVariant
+         }
       }
-    }
-  }
-  ${PRODUCT_VARIANT_FRAGMENT}
+   }
+   ${PRODUCT_VARIANT_FRAGMENT}
 ` as const
 
 const VARIANTS_QUERY = `#graphql
