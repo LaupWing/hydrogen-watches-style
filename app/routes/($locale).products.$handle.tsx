@@ -106,7 +106,7 @@ export default function Product() {
    const { product, variants } = useLoaderData<typeof loader>()
    const { selectedVariant } = product
    return (
-      <div className="product">
+      <div className="product h-screen">
          <ProductImage image={selectedVariant?.image} />
          <ProductMain
             selectedVariant={selectedVariant}
