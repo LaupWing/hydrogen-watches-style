@@ -145,9 +145,9 @@ function ProductMain({
 }) {
    const { title, descriptionHtml } = product
    return (
-      <div className="product-main">
-         <header className="">
-            <h2>About Product</h2>
+      <div className="product-main shadow">
+         <header className="bg-accent2 px-10 py-6">
+            <h2 className="text-accent font-semibold text-lg">About Product</h2>
          </header>
          <h1>{title}</h1>
          <ProductPrice selectedVariant={selectedVariant} />
