@@ -8,7 +8,8 @@ export default {
       extend: {
          colors: {
             primary: "rgba(var(--primary) / <alpha-value>)",
-            accent: "rgba(var(--accent) / <alpha-value>)"
+            accent: "rgba(var(--accent) / <alpha-value>)",
+            accent2: "rgba(var(--accent2) / <alpha-value>)"
          }
       }
    },
